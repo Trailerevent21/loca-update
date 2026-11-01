@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Loca</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M2 1h6l2 3-5 6-5-6z' fill='%23d8b878'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#120a0e;--bg2:#1c1117;--card:#241620;--line:#3a2630;--text:#f4ece4;--mute:#a8969a;--gold:#d8b878;--gold2:#a8864a;--grn:#4cc38a;--red:#e5586b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100vh;background:radial-gradient(900px 500px at 85% -10%,#3d1b2d,transparent 60%),radial-gradient(700px 400px at -10% 110%,#2a1426,transparent 60%),var(--bg);color:var(--text);font:400 16px/1.5 Manrope,system-ui,sans-serif}
+h1,h2,h3{font-family:'Cormorant Garamond',Georgia,serif;margin:0;font-weight:700}
+button{font:inherit;color:inherit;cursor:pointer}
+input{font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:11px 14px;width:100%}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.view{display:none;max-width:980px;margin:0 auto;padding:16px 18px 110px}
+.view.on{display:block}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.logo{font:700 30px 'Cormorant Garamond',serif;color:var(--gold);letter-spacing:.04em}
+.mute{color:var(--mute);margin:4px 0 14px}
+.btn{border:1px solid var(--gold2);background:transparent;padding:10px 20px;border-radius:999px;transition:.2s}
+.btn:hover:not(:disabled){background:rgba(216,184,120,.12)}
+.btn.fill{background:linear-gradient(135deg,#e6c98e,#b8934f);color:#1a0f12;border:0;font-weight:700}
+.btn.sm{padding:7px 14px;font-size:14px}
+.btn.wide{width:100%;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:10px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.chip{display:inline-flex;align-items:center;gap:8px;margin-right:8px;font-size:14px}
+.chip i{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:700;color:#1a0f12;background:linear-gradient(135deg,#e6c98e,#b8934f)}
+.hero{text-align:center;padding:18px 0 26px}
+.gem{width:96px;height:80px;filter:drop-shadow(0 10px 30px rgba(216,184,120,.45));animation:fl 5s ease-in-out infinite}
+@keyframes fl{50%{transform:translateY(-8px)}}
+.hero h1{font-size:clamp(34px,7vw,60px);line-height:1.05;margin:12px 0}
+.sec{font-size:26px;margin:6px 0 14px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 14px;text-align:center;transition:.2s}
+.tile:hover{transform:translateY(-4px);border-color:var(--gold2)}
+.tile i{display:grid;place-items:center;width:62px;height:62px;margin:0 auto 10px;border-radius:18px;font:700 28px 'Cormorant Garamond',serif;font-style:normal;color:#fff;transform:rotate(45deg)}
+.tile i span{transform:rotate(-45deg)}
+.tile b{display:block}.tile small{color:var(--mute);font-size:12px}
+.rm{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-left:5px solid var(--grn);border-radius:16px;padding:12px 14px;margin-bottom:10px}
+.rm.prv{border-left-color:var(--red)}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--grn);flex:none}
+.prv .dot{background:var(--red)}
+.rm .in{flex:1;min-width:0}.rm b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rm small{color:var(--mute)}
+.bd{font-size:12px;padding:3px 10px;border-radius:999px;border:1px solid var(--grn);color:var(--grn);white-space:nowrap}
+.prv .bd{border-color:var(--red);color:var(--red)}
+.empty{color:var(--mute);padding:8px 2px}
+.gh,.rh{font-size:24px;margin:18px 0 10px}.gh{color:var(--grn)}.rh{color:var(--red)}
+.wg{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:16px}
+@media(max-width:860px){.wg{grid-template-columns:1fr}}
+.solo .wg{grid-template-columns:1fr}.solo #side{display:none}
+.rt{flex:1;min-width:0}.rt b{font:700 24px 'Cormorant Garamond',serif;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rt small{color:var(--mute)}
+.addr{display:flex;gap:8px;margin-bottom:10px}
+.stg{aspect-ratio:16/9;background:#000;border:1px solid var(--line);border-radius:18px;overflow:hidden;position:relative}
+.stg iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.ext{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:18px;text-align:center;background:var(--bg2);overflow:auto}
+.ext p{color:var(--mute);margin:0;max-width:420px}
+.ctl{font-size:13px;color:var(--mute);margin:8px 2px}
+.pn{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px}
+.pn h3{font-size:22px;margin-bottom:10px}
+#mem{list-style:none;margin:0;padding:0;display:grid;gap:8px;max-height:200px;overflow:auto}
+#mem li{display:flex;align-items:center;gap:10px;font-size:14px}
+.av{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#1a0f12;background:linear-gradient(135deg,#e6c98e,#b8934f);border:2px solid transparent;flex:none}
+.av.talk{border-color:#fff;box-shadow:0 0 0 4px rgba(216,184,120,.35)}
+.meter{height:6px;border-radius:9px;background:var(--bg);overflow:hidden;margin:12px 0}
+.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold2),var(--gold));transition:width .08s}
+.mic.on{background:var(--red);border-color:var(--red);color:#fff}
+.note{font-size:12px;color:var(--mute);margin:8px 0 0}
+.chat{height:150px;overflow:auto;display:grid;gap:6px;align-content:start;font-size:14px;margin-bottom:10px;word-break:break-word}
+.chat b{color:var(--gold)}
+.ci{display:flex;gap:8px}
+.nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;gap:10px;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));background:rgba(18,10,14,.88);backdrop-filter:blur(14px);border-top:1px solid var(--line);z-index:5}
+.nb{flex:1;max-width:220px;border:0;background:transparent;padding:8px;border-radius:14px;color:var(--mute);display:grid;justify-items:center;gap:2px;font-size:13px}
+.nb.on{color:var(--gold);background:rgba(216,184,120,.1)}
+.nb svg{width:22px;height:22px}
+dialog{background:var(--card);color:var(--text);border:1px solid var(--gold2);border-radius:22px;padding:26px 24px;width:min(400px,92vw);position:relative}
+dialog::backdrop{background:rgba(0,0,0,.72)}
+dialog h3{font-size:28px}
+dialog input{margin:8px 0}
+.x{position:absolute;top:10px;right:12px;border:0;background:none;font-size:26px;color:var(--mute)}
+.rad{display:flex;gap:10px;margin:8px 0}
+.rad label{position:relative;flex:1;border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center;cursor:pointer}
+.rad input{position:absolute;opacity:0;pointer-events:none;width:auto}
+.rad label:has(input:checked){border-color:var(--gold);color:var(--gold)}.rad label:has(input:focus-visible){outline:2px solid var(--gold)}
+.g{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#fff;color:#4285f4;font-size:14px}
+.toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--gold);color:#1a0f12;padding:10px 20px;border-radius:999px;font-weight:700;opacity:0;pointer-events:none;transition:opacity .25s;z-index:30;max-width:90vw;text-align:center}
+.toast.on{opacity:1}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="view on" id="v-home">
+<div class="top"><div class="logo">Loca</div><div id="usr"></div></div>
+<section class="hero">
+<svg class="gem" viewBox="0 0 120 100" aria-hidden="true"><defs><linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6e3b4"/><stop offset="1" stop-color="#b8934f"/></linearGradient></defs><polygon points="30,8 90,8 116,36 60,94 4,36" fill="url(#gg)"/><g fill="none" stroke="#3a2210" stroke-opacity=".45" stroke-width="1.5"><polyline points="4,36 116,36"/><polyline points="30,8 45,36 60,94 75,36 90,8"/><polyline points="45,36 60,8 75,36"/></g><polygon points="30,8 60,8 45,36 4,36" fill="#fff" fill-opacity=".28"/></svg>
+<h1>Birlikte izle,<br>birlikte keyfini çıkar.</h1>
+<p class="mute">Bir platform seç, odanı kur ya da tek başına izle.</p>
+</section>
+<h2 class="sec">Nereden izleyelim?</h2>
+<div class="tiles" id="tiles"></div>
+</main>
+
+<main class="view" id="v-servers">
+<div class="top"><h2 class="sec" style="margin:0">Sunucular</h2><button class="btn fill" id="mk">+ Oda aç</button></div>
+<p class="mute">Odaları kullanıcılar açar. Her odada en fazla 15 kişi birlikte izleyebilir.</p>
+<h3 class="gh">Açık odalar</h3><div id="lp"></div>
+<h3 class="rh">Şifreli odalar</h3><div id="lr"></div>
+</main>
+
+<main class="view" id="v-watch">
+<div class="top"><button class="btn sm" id="lv">← Çık</button><div class="rt"><b id="rn"></b><small id="rc"></small></div></div>
+<div class="wg">
+<div>
+<div class="addr"><input id="ad" placeholder="YouTube bağlantısı yapıştır" aria-label="Bağlantı"><button class="btn fill" id="gb">Git</button></div>
+<div class="stg" id="stg"></div>
+<div class="ctl" id="ctl"></div>
+</div>
+<aside id="side">
+<div class="pn"><h3>Sesli sohbet</h3><ul id="mem"></ul><div class="meter"><i id="lvl"></i></div><button class="btn mic wide" id="mic">Mikrofonu aç</button><p class="note" id="mn">Diğer kişilerin sesi sunucu bağlanınca duyulur. Şimdilik mikrofon seviyen görünür.</p></div>
+<div class="pn"><h3>Oda sohbeti</h3><div class="chat" id="chat"></div><div class="ci"><input id="ct" placeholder="Mesaj yaz" maxlength="300" aria-label="Mesaj"><button class="btn fill sm" id="cs">Gönder</button></div></div>
+</aside>
+</div>
+</main>
+
+<nav class="nav" id="nav">
+<button class="nb on" data-v="home"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12l4 6-10 12L2 9z"/></svg>Ana ekran</button>
+<button class="nb" data-v="servers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01"/></svg>Sunucular</button>
+</nav>
+<dialog id="sh"><button class="x" id="shx" aria-label="Kapat">×</button><div id="shb"></div></dialog>
+<div class="toast" id="ts" role="status"></div>
+
+<script>
+(function(){
+var MAX=15,mem={};
+function $(i){return document.getElementById(i)}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function ls(k,d){try{var v=localStorage.getItem('loca_'+k);if(v)return JSON.parse(v)}catch(e){}return mem[k]!==undefined?mem[k]:d}
+function ss(k,v){mem[k]=v;try{localStorage.setItem('loca_'+k,JSON.stringify(v))}catch(e){}}
+function toast(t){var e=$('ts');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(function(){e.classList.remove('on')},2600)}
+var gid=null;try{gid=sessionStorage.getItem('loca_gid')}catch(e){}if(!gid){gid='u'+Math.random().toString(36).slice(2,9);try{sessionStorage.setItem('loca_gid',gid)}catch(e){}}
+var me=ls('me',null),cur=null,view='home',shown=null,chatK='',pending=null,stream=null,ctx=null,raf=0;
+function uname(){return me?me.n:'Misafir '+gid.slice(-3)}
+var S={yt:{n:'YouTube',u:'https://www.youtube.com',c:'#e5586b',l:'▶',s:'Videoları birlikte izle'},gg:{n:'Google',u:'https://www.google.com',c:'#6f9be0',l:'G',s:'Arama ve sayfalar'},nf:{n:'Netflix',u:'https://www.netflix.com',c:'#b3203a',l:'N',s:'Kendi hesabınla gir'},ln:{n:'Bağlantı',u:'',c:'#b8934f',l:'+',s:'Bağlantı yapıştır'}};
+$('tiles').innerHTML=Object.keys(S).map(function(k){var s=S[k];return '<button class="tile" data-k="'+k+'"><i style="background:'+s.c+'"><span>'+s.l+'</span></i><b>'+s.n+'</b><small>'+s.s+'</small></button>'}).join('');
+function openExt(u){var N=window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform(),B=window.Capacitor&&Capacitor.Plugins&&Capacitor.Plugins.Browser;if(N&&B)B.open({url:u});else window.open(u,'_blank','noopener')}
+function hash(s){var d='loca:'+s;if(window.crypto&&crypto.subtle&&window.TextEncoder)return crypto.subtle.digest('SHA-256',new TextEncoder().encode(d)).then(function(b){return Array.prototype.map.call(new Uint8Array(b),function(x){return('0'+x.toString(16)).slice(-2)}).join('')});return Promise.resolve('p'+d)}
+function prune(){var R=ls('rooms',{}),now=Date.now(),ch=false;Object.keys(R).forEach(function(id){var r=R[id];Object.keys(r.m).forEach(function(u){if(now-r.m[u].t>20000){delete r.m[u];ch=true}});var ks=Object.keys(r.m);if(!ks.length){delete R[id];ch=true}else if(!r.m[r.o]){r.o=ks[0];ch=true}});if(ch)ss('rooms',R);return R}
+function setView(v){view=v;['home','servers','watch'].forEach(function(x){$('v-'+x).classList.toggle('on',x===v)});$('nav').style.display=v==='watch'?'none':'flex';Array.prototype.forEach.call(document.querySelectorAll('.nb'),function(b){b.classList.toggle('on',b.dataset.v===v)});if(v==='servers')renderServers();window.scrollTo(0,0)}
+var dlg=$('sh');
+function sheet(h){$('shb').innerHTML=h;if(!dlg.open){if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','')}}
+function closeSheet(){if(dlg.close)dlg.close();else dlg.removeAttribute('open')}
+$('shx').onclick=closeSheet;
+function usr(){$('usr').innerHTML=me?'<span class="chip"><i>'+esc(me.n.charAt(0).toUpperCase())+'</i>'+esc(me.n)+'</span><button class="btn sm" id="lo">Çıkış</button>':'<button class="btn sm fill" id="li">Giriş yap</button>'}
+$('usr').onclick=function(e){var t=e.target.closest('button');if(!t)return;if(t.id==='li')login(null);if(t.id==='lo'){if(cur)leave();me=null;ss('me',null);usr();toast('Çıkış yapıldı')}};
+function login(cb,msg){pending=cb;sheet('<h3>Giriş yap</h3><p class="mute">'+(msg||'Google hesabınla giriş yap.')+'</p><input id="em" type="email" placeholder="ornek@gmail.com" autocomplete="email"><button class="btn fill wide" id="gok"><b class="g">G</b> Google ile devam et</button><p class="note">Bu sürümde giriş yalnızca bu cihazda çalışır. Gerçek Google doğrulaması sunucu bağlanınca açılacak.</p>')}
+function needLogin(cb){if(me){cb();return}login(cb,'Oda açmak için giriş yapman gerekiyor.')}
+function tileMenu(k){sheet('<h3>'+S[k].n+'</h3><p class="mute">Nasıl izlemek istersin?</p><button class="btn fill wide" data-t="'+k+'" data-a="room">Oda kur</button><button class="btn wide" data-t="'+k+'" data-a="solo">Yalnız izle</button>')}
+function tileAct(k,a){closeSheet();if(a==='solo'){if(k==='gg'||k==='nf'){openExt(S[k].u);if(k==='nf')toast('Netflix’e kendi hesabınla giriş yap');return}cur=null;openWatch(true,'Yalnız izle · '+S[k].n,'');return}needLogin(function(){createSheet(k)})}
+function createSheet(k){sheet('<h3>Oda kur</h3><input id="rn0" placeholder="Oda adı" maxlength="24"><div class="rad"><label><input type="radio" name="ty" value="pub" checked>Açık</label><label><input type="radio" name="ty" value="prv">Şifreli</label></div><input id="pw0" type="password" placeholder="Oda şifresi (en az 4 karakter)" style="display:none"><p class="note">Odada en fazla '+MAX+' kişi olabilir. Açık odalar Sunucular’da yeşil, şifreli odalar kırmızı görünür.</p><button class="btn fill wide" id="cr" data-k="'+k+'">Odayı aç</button>')}
+function doCreate(){if(!me){toast('Önce giriş yap');return}var n=$('rn0').value.trim(),ty=document.querySelector('input[name=ty]:checked').value,pw=$('pw0').value,k=$('cr').dataset.k;if(!n){toast('Oda adı yaz');return}if(ty==='prv'&&pw.length<4){toast('Şifre en az 4 karakter olmalı');return}hash(pw).then(function(h){var R=prune(),id='r'+Math.random().toString(36).slice(2,8),m={};m[gid]={n:uname(),t:Date.now()};R[id]={id:id,n:n,pub:ty==='pub',h:ty==='prv'?h:'',o:gid,m:m,url:(k==='gg'||k==='nf')?S[k].u:'',chat:[]};ss('rooms',R);closeSheet();enter(id)})}
+function joinRoom(id){var R=prune(),r=R[id];if(!r){toast('Oda kapandı');renderServers();return}if(r.m[gid]){enter(id);return}if(Object.keys(r.m).length>=MAX){toast('Oda dolu (15/15)');return}if(r.pub)addMember(id);else sheet('<h3>'+esc(r.n)+'</h3><p class="mute">Bu oda şifreli.</p><input id="jp" type="password" placeholder="Şifre"><button class="btn fill wide" id="jn" data-id="'+id+'">Katıl</button>')}
+function addMember(id){var R=prune(),r=R[id];if(!r){toast('Oda kapandı');return}if(Object.keys(r.m).length>=MAX){toast('Oda dolu (15/15)');return}r.m[gid]={n:uname(),t:Date.now()};ss('rooms',R);closeSheet();enter(id)}
+$('shb').addEventListener('click',function(e){var t=e.target.closest('button');if(!t)return;
+if(t.id==='gok'){var v=$('em').value.trim().toLowerCase();if(!/^[a-z0-9._+-]+@gmail\.com$/.test(v)){toast('Geçerli bir Gmail adresi yaz');return}me={e:v,n:v.split('@')[0]};ss('me',me);closeSheet();usr();toast('Hoş geldin, '+me.n);var f=pending;pending=null;if(f)f()}
+else if(t.dataset.t)tileAct(t.dataset.t,t.dataset.a);
+else if(t.id==='cr')doCreate();
+else if(t.id==='jn'){var id=t.dataset.id;hash($('jp').value).then(function(h){var r=prune()[id];if(!r){toast('Oda kapandı');closeSheet();return}if(h!==r.h){toast('Şifre yanlış');return}addMember(id)})}});
+$('shb').addEventListener('change',function(e){if(e.target.name==='ty')$('pw0').style.display=e.target.value==='prv'?'block':'none'});
+$('tiles').onclick=function(e){var b=e.target.closest('.tile');if(b)tileMenu(b.dataset.k)};
+$('mk').onclick=function(){needLogin(function(){createSheet('yt')})};
+$('v-servers').onclick=function(e){var b=e.target.closest('[data-j]');if(b&&!b.disabled)joinRoom(b.dataset.j)};
+Array.prototype.forEach.call(document.querySelectorAll('.nb'),function(b){b.onclick=function(){setView(b.dataset.v)}});
+function renderServers(){var R=prune(),a=Object.keys(R).map(function(k){return R[k]});
+function card(r){var n=Object.keys(r.m).length,full=n>=MAX;return '<div class="rm '+(r.pub?'pub':'prv')+'"><span class="dot"></span><div class="in"><b>'+esc(r.n)+'</b><small>Sahip: '+esc((r.m[r.o]||{}).n||'-')+' · '+n+'/'+MAX+' kişi</small></div><span class="bd">'+(r.pub?'Kilitsiz':'Şifreli')+'</span><button class="btn sm'+(full?'':' fill')+'" data-j="'+r.id+'"'+(full?' disabled':'')+'>'+(full?'Dolu':'Katıl')+'</button></div>'}
+var p=a.filter(function(r){return r.pub}),q=a.filter(function(r){return!r.pub});
+$('lp').innerHTML=p.length?p.map(card).join(''):'<p class="empty">Henüz açık oda yok.</p>';
+$('lr').innerHTML=q.length?q.map(card).join(''):'<p class="empty">Henüz şifreli oda yok.</p>'}
+function ytId(u){var m=u.match(/(?:youtube\.com\/watch\?(?:[^#]*&)?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([\w-]{11})/);return m?m[1]:''}
+function norm(v){v=v.trim();if(/^https?:\/\//i.test(v))return v;if(/^[\w-]+(\.[\w-]+)+(\/\S*)?$/.test(v))return 'https://'+v;return ''}
+function stage(u,own){shown=u;var s=$('stg');if(!u){s.innerHTML='<div class="ext"><h3>Bir video seç</h3><p>YouTube’da izlemek istediğin videoyu bul, bağlantısını kopyala ve yukarıdaki kutuya yapıştır.</p><button class="btn fill" data-x="https://www.youtube.com">YouTube’u aç</button></div>';return}
+var id=ytId(u);if(id){s.innerHTML='<iframe src="https://www.youtube.com/embed/'+id+'?autoplay=1" title="Video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';return}
+var host=u.replace(/^https?:\/\/(www\.)?/,'').split('/')[0];s.innerHTML='<div class="ext"><h3>'+esc(host)+'</h3><p>Bu sayfa uygulamanın içinde gösterilemez. Aç düğmesiyle ayrı pencerede aç.'+(/netflix/.test(host)?' Herkes kendi hesabıyla girer, sesli sohbet burada devam eder.':'')+'</p><button class="btn fill" data-x="'+esc(u)+'">Aç</button></div>'}
+$('stg').onclick=function(e){var b=e.target.closest('[data-x]');if(b)openExt(b.dataset.x)};
+function openWatch(solo,title,url){$('v-watch').classList.toggle('solo',solo);$('rn').textContent=title;$('rc').textContent='';$('ad').disabled=false;$('ad').value=url;$('ctl').textContent=solo?'Bağlantıyı yapıştır, video burada oynar.':'';stage(url,true);setView('watch')}
+function enter(id){cur=id;chatK='';$('v-watch').classList.remove('solo');setView('watch');renderRoom(true)}
+function renderRoom(f){if(!cur)return;var R=prune(),r=R[cur];if(!r){cur=null;stopMic();toast('Oda kapandı');setView('servers');return}
+if(!r.m[gid]){if(Object.keys(r.m).length>=MAX){cur=null;stopMic();toast('Odadan çıkarıldın');setView('servers');return}r.m[gid]={n:uname(),t:Date.now()};ss('rooms',R)}
+var ks=Object.keys(r.m),own=r.o===gid;$('rn').textContent=r.n;$('rc').textContent=ks.length+'/'+MAX+' kişi · '+(r.pub?'Açık oda':'Şifreli oda');
+$('mem').innerHTML=ks.map(function(u){var n=r.m[u].n;return '<li'+(u===gid?' class="me"':'')+'><span class="av">'+esc(n.charAt(0).toUpperCase())+'</span><span>'+esc(n)+(u===r.o?' ♛':'')+(u===gid?' (sen)':'')+'</span></li>'}).join('');
+$('ad').disabled=!own;if(document.activeElement!==$('ad'))$('ad').value=r.url||'';$('ad').placeholder=own?'YouTube bağlantısı yapıştır':'Oda sahibi yönetiyor';
+$('ctl').textContent=own?'Sen yönetiyorsun: bağlantıyı değiştirince herkesin ekranı değişir.':'Odayı '+((r.m[r.o]||{}).n||'-')+' yönetiyor. Sayfa onunla birlikte değişir.';
+if(f||shown!==(r.url||''))stage(r.url||'',own);
+var k=r.chat.length+':'+(r.chat.length?r.chat[r.chat.length-1].ts:0);if(k!==chatK){chatK=k;var c=$('chat');c.innerHTML=r.chat.map(function(m){return '<div><b>'+esc(m.n)+':</b> '+esc(m.t)+'</div>'}).join('');c.scrollTop=c.scrollHeight}}
+function go(){var raw=$('ad').value.trim(),u=norm(raw);if(!u){if(raw){openExt('https://www.youtube.com/results?search_query='+encodeURIComponent(raw));toast('Videoyu bul, bağlantısını buraya yapıştır')}return}
+if(cur){var R=prune(),r=R[cur];if(!r||r.o!==gid){toast('Sadece oda sahibi değiştirebilir');return}r.url=u;ss('rooms',R);renderRoom()}else stage(u,true)}
+$('gb').onclick=go;$('ad').onkeydown=function(e){if(e.key==='Enter')go()};
+function send(){var t=$('ct').value.trim();if(!t||!cur)return;var R=prune(),r=R[cur];if(!r)return;r.chat.push({n:uname(),t:t.slice(0,300),ts:Date.now()});r.chat=r.chat.slice(-50);ss('rooms',R);$('ct').value='';renderRoom()}
+$('cs').onclick=send;$('ct').onkeydown=function(e){if(e.key==='Enter')send()};
+function leave(){if(cur){var R=prune();if(R[cur]){delete R[cur].m[gid];ss('rooms',R)}}var was=cur;cur=null;stopMic();setView(was?'servers':'home')}
+$('lv').onclick=leave;
+window.addEventListener('pagehide',function(){if(cur){var R=ls('rooms',{});if(R[cur]){delete R[cur].m[gid];ss('rooms',R)}}});
+function stopMic(){if(stream){stream.getTracks().forEach(function(t){t.stop()});stream=null}cancelAnimationFrame(raf);var m=$('mic');m.textContent='Mikrofonu aç';m.classList.remove('on');$('lvl').style.width='0'}
+$('mic').onclick=function(){if(stream){stopMic();return}
+if(!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia)){toast('Bu cihaz mikrofonu desteklemiyor');return}
+navigator.mediaDevices.getUserMedia({audio:true}).then(function(s){stream=s;ctx=ctx||new(window.AudioContext||window.webkitAudioContext)();var a=ctx.createAnalyser();a.fftSize=256;ctx.createMediaStreamSource(s).connect(a);var d=new Uint8Array(a.frequencyBinCount),m=$('mic');m.textContent='Mikrofonu kapat';m.classList.add('on');
+(function loop(){a.getByteFrequencyData(d);var v=0;for(var i=0;i<d.length;i++)v+=d[i];v/=d.length;$('lvl').style.width=Math.min(100,v*2.2)+'%';var av=document.querySelector('#mem .me .av');if(av)av.classList.toggle('talk',v>18);raf=requestAnimationFrame(loop)})()}).catch(function(){toast('Mikrofon izni verilmedi')})};
+function tick(){if(cur){var R=ls('rooms',{}),r=R[cur];if(r&&r.m[gid]){r.m[gid].t=Date.now();ss('rooms',R)}renderRoom()}if(view==='servers')renderServers()}
+setInterval(tick,2500);window.addEventListener('storage',function(){if(cur)renderRoom();if(view==='servers')renderServers()});
+usr();setView('home');
+window.__loca={rooms:function(){return prune()}};
+})();
+</script>
+</body>
+</html>
